@@ -5,76 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Måns Holmqvist - Mellan himmel och hallucination</title>
     <link href="https://cdn.tailwindcss.com/2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Stripe.js-skriptet är tillagt -->
     <script src="https://js.stripe.com/v3/"></script>
     <style>
         body {
-            background-color: #f4f4f5;
-            color: #1f2937;
-            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            font-family: 'Georgia', serif;
         }
         .hero-bg {
-            background-image: url('images/cover.jpeg'); /* Byt till din lokala bild */
+            background-image: url('images/cover.jpeg'); /* Kom ihåg att byta till din lokala bild */
             background-size: cover;
             background-position: center;
         }
         .text-shadow-custom {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
         details summary {
-            font-weight: 600; /* Semi-bold */
+            font-weight: 600;
             cursor: pointer;
             padding: 0.75rem 1.5rem;
-            background-color: #ffffff;
-            border: 1px solid #e5e7eb;
+            background-color: #2a2a2a;
+            border: 1px solid #ff4500;
             border-radius: 0.5rem;
             transition: background-color 0.2s;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: #ff4500;
         }
         details[open] summary {
-            background-color: #ffedd5; /* Orange-ish when open */
+            background-color: #4d2a17;
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
-            border-color: #fed7aa;
         }
         details summary:hover {
-            background-color: #f9fafb;
+            background-color: #3f3f3f;
         }
         .details-content {
             padding: 1.5rem;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #ff4500;
             border-top: none;
             border-bottom-left-radius: 0.5rem;
             border-bottom-right-radius: 0.5rem;
-            background-color: #ffffff;
+            background-color: #2a2a2a;
+            color: #f5f5f5;
         }
-        /* Rotationsikon för details/summary */
         details summary::after {
             content: '+';
             font-size: 1.5rem;
             transition: transform 0.2s;
+            color: #ff4500;
         }
         details[open] summary::after {
             content: '-';
-            transform: rotate(180deg);
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-900 text-gray-200">
 
     <!-- Hero-sektion -->
     <header class="hero-bg text-white">
         <div class="bg-black bg-opacity-60 w-full h-full py-24">
             <div class="max-w-4xl mx-auto text-center px-4">
-                <h1 class="text-5xl font-extrabold text-shadow-custom">Mellan himmel och hallucination</h1>
+                <h1 class="text-5xl font-extrabold text-shadow-custom" style="color: #ff4500;">Mellan himmel och hallucination</h1>
                 <p class="text-2xl mt-4 italic text-shadow-custom">Av Måns Holmqvist</p>
                 <p class="mt-8 text-lg">
                     Lansering idag, 14:e augusti!
                     <br>
                     En bok om att finna ljus i det djupaste mörkret.
                 </p>
-                <a href="#purchase" class="mt-8 inline-block bg-orange-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-600 transition">Köp Boken Nu</a>
+                <a href="#purchase" class="mt-8 inline-block bg-orange-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-700 transition shadow-lg">Köp Boken Nu</a>
             </div>
         </div>
     </header>
@@ -82,251 +83,101 @@
     <main class="max-w-4xl mx-auto p-4 md:p-8">
 
         <!-- Köp-sektion -->
-        <section id="purchase" class="my-12 p-8 bg-white rounded-xl shadow-lg text-center">
-            <h2 class="text-3xl font-bold text-orange-600 mb-4">Köp "Mellan himmel och hallucination"</h2>
-            <p class="text-xl mb-2">Pris: 284 kr</p>
-            <p class="text-gray-600 mb-6">Välj betalsätt nedan. Boken skickas med PostNord och anländer vanligtvis inom 3 dagar.</p>
+        <section id="purchase" class="my-12 p-8 bg-gray-800 rounded-xl shadow-lg text-center border-2 border-orange-500">
+            <h2 class="text-3xl font-bold text-orange-500 mb-4">Köp "Mellan himmel och hallucination"</h2>
+            <p class="text-xl mb-2 text-gray-300">Pris: 284 kr</p>
+            <p class="text-gray-400 mb-6">Välj betalsätt nedan. Boken skickas med PostNord och anländer vanligtvis inom 3 dagar.</p>
             <div class="flex flex-col md:flex-row justify-center gap-4">
-                <button id="checkout-button-card" class="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600">Betala med Kort</button>
-                <button id="checkout-button-swish" class="bg-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-600">Betala med Swish</button>
+                <!-- Knappar har nu fått ID:n -->
+                <button id="checkout-button-card" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Betala med Kort</button>
+                <button id="checkout-button-swish" class="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition">Betala med Swish</button>
             </div>
         </section>
 
-        <!-- Utdrag ur boken - NY STRUKTUR -->
+        <!-- Utdrag ur boken -->
         <section class="my-12">
-            <h2 class="text-3xl font-bold text-center mb-8">Läs utdrag ur boken</h2>
+            <h2 class="text-3xl font-bold text-center mb-8 text-orange-500">Läs utdrag ur boken</h2>
             <div class="space-y-4">
                 
                 <!-- Inledning -->
                 <details>
-                    <summary class="text-xl text-gray-700">Visa/dölj: Inledning</summary>
-                    <div class="details-content space-y-4 text-gray-600 leading-relaxed">
-                        <p>Det här är inte en bok.</p>
-                        <p>Det här är ett hjärta, krossat i tusen bitar och återuppståndet i eld.<br>
-                        Det är ett rop från den som varit under ytan.<br>
-                        Det är ett brev från någon som andats i skärvor – och ändå rest sig med sång på läpparna.<br>
-                        Det här är inte en historia om mig. Det är en spegel mot dig.<br>
-                        Du, som kanske inte tror att någon förstår.</p>
-                        <p>Jag vet inte var du är när du läser detta. Kanske ligger du i en säng du inte valt. Kanske bär du på skuggor ingen ser.<br>
-                        Kanske har du glömt hur det känns att hoppas.</p>
-                        <p>Men hör mig nu:<br>
-                        Du är inte ensam. Du är inte förlorad. Och du är inte klar.<br>
-                        Den här texten är smidd av brända tårar.<br>
-                        Det är inte bläck på papper – det är eld över aska. Varje kapitel är en bön. Varje mening en överlevd natt.</p>
-                        <p>Jag skriver inte för att glänsa.<br>
-                        Jag skriver inte för att du ska beundra mig. Jag skriver för att någon måste säga det:<br>
-                        Det finns ett ljus starkare än din smärta. Det finns en hand som aldrig släppt dig.<br>
-                        Det finns ett syfte – även i allt som krossat dig.</p>
-                        <p>Det här är en bok som inte ber om medlidande. Den kräver inte sympati.<br>
-                        Den brinner för att du ska vakna. Vakna till vem du var menad att bli.<br>
-                        Och jag vet… jag vet att världen kan se dig som svag.<br>
-                        Men svag är den som aldrig brutits.<br>
-                        Du har gått igenom saker som skulle fått andra att ge upp.<br>
-                        Men du står här. Du läser detta.<br>
-                        Det betyder att hoppet fortfarande lever. Och det räcker. Det räcker för att vända allt.<br>
-                        Så när du håller det här i din hand – håll det som något heligt.<br>
-                        För det är inte min historia. Det är vår.</p>
-                        <p>Detta är ett vittnesbörd. Ett rop. En eldskrift från en själ som fallit och rest sig.<br>
-                        Det du håller är inte bara papper – det är en låga. Och kanske, om du låter den komma nära nog, kommer den tända något i dig som du trodde var dött.<br>
-                        Måns</p>
+                    <summary class="text-xl">Visa/dölj: Inledning</summary>
+                    <div class="details-content space-y-4 leading-relaxed">
+                        <p>Det här är inte en bok.</p><p>Det här är ett hjärta, krossat i tusen bitar och återuppståndet i eld.<br>Det är ett rop från den som varit under ytan.<br>Det är ett brev från någon som andats i skärvor – och ändå rest sig med sång på läpparna.<br>Det här är inte en historia om mig. Det är en spegel mot dig.<br>Du, som kanske inte tror att någon förstår.</p><p>Jag vet inte var du är när du läser detta. Kanske ligger du i en säng du inte valt. Kanske bär du på skuggor ingen ser.<br>Kanske har du glömt hur det känns att hoppas.</p><p>Men hör mig nu:<br>Du är inte ensam. Du är inte förlorad. Och du är inte klar.<br>Den här texten är smidd av brända tårar.<br>Det är inte bläck på papper – det är eld över aska. Varje kapitel är en bön. Varje mening en överlevd natt.</p><p>Jag skriver inte för att glänsa.<br>Jag skriver inte för att du ska beundra mig. Jag skriver för att någon måste säga det:<br>Det finns ett ljus starkare än din smärta. Det finns en hand som aldrig släppt dig.<br>Det finns ett syfte – även i allt som krossat dig.</p><p>Det här är en bok som inte ber om medlidande. Den kräver inte sympati.<br>Den brinner för att du ska vakna. Vakna till vem du var menad att bli.<br>Och jag vet… jag vet att världen kan se dig som svag.<br>Men svag är den som aldrig brutits.<br>Du har gått igenom saker som skulle fått andra att ge upp.<br>Men du står här. Du läser detta.<br>Det betyder att hoppet fortfarande lever. Och det räcker. Det räcker för att vända allt.<br>Så när du håller det här i din hand – håll det som något heligt.<br>För det är inte min historia. Det är vår.</p><p>Detta är ett vittnesbörd. Ett rop. En eldskrift från en själ som fallit och rest sig.<br>Det du håller är inte bara papper – det är en låga. Och kanske, om du låter den komma nära nog, kommer den tända något i dig som du trodde var dött.<br>Måns</p>
                     </div>
                 </details>
 
                 <!-- Förord -->
                 <details>
-                    <summary class="text-xl text-gray-700">Visa/dölj: Förord</summary>
-                    <div class="details-content space-y-4 text-gray-600 leading-relaxed">
-                        <p>Av eld. För den som nästan gav upp.</p>
-                        <p>Det här började inte som en bok.<br>
-                        Det började med ett skrik ingen hörde. Med en blick upp i ett tak jag inte valt,<br>
-                        en säng jag inte visste om jag skulle vakna från. Det började i askan – där jag försökte minnas hur ljus kändes.<br>
-                        Jag skrev inte för att berätta min historia. Jag skrev för att överleva den.<br>
-                        Och nu lägger jag den i dina händer,<br>
-                        inte som en berättelse – utan som en bro. En bro från mörkret till något som glöder.</p>
-                        <p>Jag vet inte vem du är. Jag vet inte vad du bär.<br>
-                        Men jag vet att du fortfarande andas. Och det räcker.</p>
-                        <p>Jag har sett människor brytas.<br>
-                        Jag har sett röster slita sönder inifrån.<br>
-                        Jag har sett en värld som är för kall för sköra hjärtan.<br>
-                        Och jag har varit där – när skriket inte ens når dina egna öron längre.<br>
-                        När hopp känns som en lögn.</p>
-                        <p>Men jag har också sett något annat. Något större än mörkret.<br>
-                        Något som inte ger upp – även när vi gör det. Jag har sett ljuset – inte som teori, utan som verklighet.<br>
-                        Som en hand i natten.<br>
-                        Som en eld som aldrig slocknar, bara väntar på syre.<br>
-                        Det här är inte en bok som vill att du ska tycka synd om mig.<br>
-                        Den är inte skriven för att du ska känna beundran. Den är skriven för att du ska vakna.<br>
-                        Vakna till att du fortfarande har något att ge. Att din smärta inte var förgäves.<br>
-                        Att varje krossad sekund kan bli ett frö.<br>
-                        Att det finns någon som såg allt – och aldrig lämnade dig.<br>
-                        Du är inte svag för att du bröt ihop. Du är stark för att du reste dig igen. Och om du ännu inte rest dig –</p>
-                        <p>så andas.<br>
-                        Låt dessa ord bära dig en bit.</p>
-                        <p>Det här är min sång från skärvorna.<br>
-                        Mitt hjärta, nedskrivet med brända tårar. Det är inte vackert för att det är perfekt – det är vackert för att det är sant.<br>
-                        Jag skriver till dig som inte trodde att någon förstod. Jag skriver till dig som fortfarande gråter i tystnad. Jag skriver till dig som ingen annan orkade stanna hos.<br>
-                        Det här är till dig.</p>
-                        <p>Så om det bränner när du läser – låt det bränna.<br>
-                        För det är inte smärta –<br>
-                        det är livet som viskar att du är kvar.</p>
-                        <p>Och kanske, bara kanske,<br>
-                        kommer något i dig börja brinna igen. Då har detta förord gjort vad det skulle.<br>
-                        Och jag lovar dig –<br>
-                        det bästa har inte hänt än.<br>
-                        Måns</p>
+                    <summary class="text-xl">Visa/dölj: Förord</summary>
+                    <div class="details-content space-y-4 leading-relaxed">
+                        <p>Av eld. För den som nästan gav upp.</p><p>Det här började inte som en bok.<br>Det började med ett skrik ingen hörde. Med en blick upp i ett tak jag inte valt,<br>en säng jag inte visste om jag skulle vakna från. Det började i askan – där jag försökte minnas hur ljus kändes.<br>Jag skrev inte för att berätta min historia. Jag skrev för att överleva den.<br>Och nu lägger jag den i dina händer,<br>inte som en berättelse – utan som en bro. En bro från mörkret till något som glöder.</p><p>Jag vet inte vem du är. Jag vet inte vad du bär.<br>Men jag vet att du fortfarande andas. Och det räcker.</p><p>Jag har sett människor brytas.<br>Jag har sett röster slita sönder inifrån.<br>Jag har sett en värld som är för kall för sköra hjärtan.<br>Och jag har varit där – när skriket inte ens når dina egna öron längre.<br>När hopp känns som en lögn.</p><p>Men jag har också sett något annat. Något större än mörkret.<br>Något som inte ger upp – även när vi gör det. Jag har sett ljuset – inte som teori, utan som verklighet.<br>Som en hand i natten.<br>Som en eld som aldrig slocknar, bara väntar på syre.<br>Det här är inte en bok som vill att du ska tycka synd om mig.<br>Den är inte skriven för att du ska känna beundran. Den är skriven för att du ska vakna.<br>Vakna till att du fortfarande har något att ge. Att din smärta inte var förgäves.<br>Att varje krossad sekund kan bli ett frö.<br>Att det finns någon som såg allt – och aldrig lämnade dig.<br>Du är inte svag för att du bröt ihop. Du är stark för att du reste dig igen. Och om du ännu inte rest dig –</p><p>så andas.<br>Låt dessa ord bära dig en bit.</p><p>Det här är min sång från skärvorna.<br>Mitt hjärta, nedskrivet med brända tårar. Det är inte vackert för att det är perfekt – det är vackert för att det är sant.<br>Jag skriver till dig som inte trodde att någon förstod. Jag skriver till dig som fortfarande gråter i tystnad. Jag skriver till dig som ingen annan orkade stanna hos.<br>Det här är till dig.</p><p>Så om det bränner när du läser – låt det bränna.<br>För det är inte smärta –<br>det är livet som viskar att du är kvar.</p><p>Och kanske, bara kanske,<br>kommer något i dig börja brinna igen. Då har detta förord gjort vad det skulle.<br>Och jag lovar dig –<br>det bästa har inte hänt än.<br>Måns</p>
                     </div>
                 </details>
 
                 <!-- Skärvor och skrik -->
                 <details>
-                    <summary class="text-xl text-gray-700">Visa/dölj: Kapitel 1 - Skärvor och skrik</summary>
-                    <div class="details-content space-y-4 text-gray-600 leading-relaxed">
-                        <p>Jag var arton år och mitt i den sista gymnasie terminen när allt började skälva. Studenten närmade sig. Framtiden låg som en öppen horisont – men inom mig stormade det. Istället för förväntan växte en oro. Djup, tung och oförklarlig – som om marken långsamt höll på att försvinna under mina fötter.</p>
-                        <p>Ser jag tillbaka på barndomen kan jag ana att fröet redan då var sått. En skörhet fanns i mig från början – en förtänksamhet, ett tvivel som aldrig riktigt lämnade. Jag hade svårt att fatta beslut, gick ständigt och kände efter. Osäkerheten sträckte sig både inåt och utåt: mot mig själv, mot andras blickar, ord, tystnader. En enda kommentar kunde dröja sig kvar i mig i dagar, gnaga och växa.<br>
-                        Rädslan att göra fel låg som ett svagt stråk av ström under ytan – alltid närvarande. Känslan av otillräcklighet följde mig som en skugga. Och skuggan växte i takt med åren.</p>
-                        <p>Jag minns hur jag som barn alltid sköt fram min syster när vi skulle gå in i affärer eller fråga något.</p>
-                        <p>Hon fick vara den som pratade – hon var modigare än jag. Själv stod jag ett steg bakom, tyst, lättad över att slippa, men också fylld av skam. Skam över min rädsla, över det som inte syntes men ändå kändes.</p>
-                        <p><strong>Ett barn med tusen frågor</strong></p>
-                        <p>När jag var liten bar jag på ett hav av frågor.<br>
-                        De vällde upp inom mig som vågor jag inte kunde stoppa –<br>
-                        om livet, om döden, om varför världen såg ut som den gjorde.<br>
-                        Varför solen gick upp. Varför folk grät.<br>
-                        Varför jag ibland kände mig så fruktansvärt ensam, även när rummet var fullt.</p>
-                        <p>Jag ställde dem till pappa. Till mamma. Till alla jag litade på.<br>
-                        För hemma – där fanns tryggheten. Där fick tankarna plats.<br>
-                        Där fanns inga skratt bakom ryggen, inga blickar som dömde.<br>
-                        Där fanns deras händer. Deras röster.<br>
-                        Deras blickar som sa: "Du får undra, älskling."</p>
-                        <p>Men i skolan var det annorlunda.<br>
-                        Där satt frågorna fast som isklumpar i halsen.</p>
-                        <p>Jag vågade inte räcka upp handen. Vågade inte låta någon höra hur mycket jag undrade,<br>
-                        för tänk om de skrattade.<br>
-                        Tänk om de tyckte jag var konstig.</p>
-                        <p>Så jag bar frågorna hem.<br>
-                        Sprang med dem till mamma och pappa, som alltid lyssnade.<br>
-                        Alltid svarade.<br>
-                        Och när jag inte förstod, försökte de igen.<br>
-                        Och när svaret inte fanns, höll de bara om mig.</p>
-                        <p>I deras famn fick mina frågor finnas.<br>
-                        I deras kärlek blev det okej att inte veta.<br>
-                        Jag vet att jag inte hade klarat barndomen utan dem.<br>
-                        De var min första trygghet. Min första tröst.<br>
-                        Min första spegel – där jag såg att jag var älskad.</p>
-                        <p>Men ju äldre jag blev, desto fler skuggor föll in över barndomens ljus. När mina föräldrar skilde sig under gymnasiet var det tungt att bära.<br>
-                        En tid som gjorde ont.<br>
-                        Men jag är innerligt tacksam att ni idag har en god relation –<br>
-                        att ni, trots allt, har kunnat vara där för mig tillsammans.</p>
-                        <p>Det betyder mer än ni någonsin kan ana.</p>
-                        <p><strong>När porten till det osynliga öppnades</strong></p>
-                        <p>Vissa händelser blev vändpunkter i det inre landskap där min oro fick kropp och form. Ett barndomsminne står särskilt klart. Vi hade haft inbrott hemma, och jag – som då gick på fritids – skulle få vara ensam hemma för första gången. Det som borde ha varit ett steg mot självständighet blev istället början på en inre förskjutning. Något förändrades.</p>
-                        <p>Nätterna blev orons hemvist. Jag började lyssna – efter fotsteg, rörelser, viskningar. Ofta stod jag vid fönstret och stirrade ut i mörkret, övertygad om att någon fanns där ute. Någon som såg oss. Röster viskade i utkanten av mitt medvetande – svaga men oroande, som om de bar på hemligheter jag inte förstod. Jag kunde inte sätta ord på vad som hände inom mig, men något öppnades – och det som sipprade in var kallt och skrämmande.</p>
-                        <p>Ett annat minne har bränts fast i mitt inre som en skamfläck. Jag hade ordnat en fest, bjudit in vänner, pyntat, försökt skapa något fint. Men när kvällen kom, när gästerna var där och allt borde ha varit glatt – då brast det. Jag klarade inte av det. Jag flydde in i mitt rum, klättrade ut genom fönstret och lade mig i trädgården, låtsades vara medvetslös –</p>
-                        <p>som om jag druckit för mycket. I själva verket var jag spiknykter. Paniken hade tagit över, och rösterna var där även den kvällen – lågmälda, pressande, som förstärkare av allt jag redan bar inom mig. Jag ville bara försvinna. Bort. Bli osynlig.</p>
-                        <p>Det var som om något i mig alltid stod på glänt för det osynliga. En slags andlig porositet – en öppenhet som ibland kändes som en gåva, men oftare som en förbannelse. Jag bar på ett överflöd av känslor jag inte hade språk för – och i tystnaden växte rädslan, skulden och skammen. De blev mitt modersmål. Mitt sällskap i mörkret.</p>
-                        <p>Det här var början. Inte på slutet – men på något som skulle förändra allt.</p>
+                    <summary class="text-xl">Visa/dölj: Kapitel 1 - Skärvor och skrik</summary>
+                    <div class="details-content space-y-4 leading-relaxed">
+                        <p>Jag var arton år och mitt i den sista gymnasie terminen när allt började skälva. Studenten närmade sig. Framtiden låg som en öppen horisont – men inom mig stormade det. Istället för förväntan växte en oro. Djup, tung och oförklarlig – som om marken långsamt höll på att försvinna under mina fötter.</p><p>Ser jag tillbaka på barndomen kan jag ana att fröet redan då var sått. En skörhet fanns i mig från början – en förtänksamhet, ett tvivel som aldrig riktigt lämnade. Jag hade svårt att fatta beslut, gick ständigt och kände efter. Osäkerheten sträckte sig både inåt och utåt: mot mig själv, mot andras blickar, ord, tystnader. En enda kommentar kunde dröja sig kvar i mig i dagar, gnaga och växa.<br>Rädslan att göra fel låg som ett svagt stråk av ström under ytan – alltid närvarande. Känslan av otillräcklighet följde mig som en skugga. Och skuggan växte i takt med åren.</p><p>Jag minns hur jag som barn alltid sköt fram min syster när vi skulle gå in i affärer eller fråga något.</p><p>Hon fick vara den som pratade – hon var modigare än jag. Själv stod jag ett steg bakom, tyst, lättad över att slippa, men också fylld av skam. Skam över min rädsla, över det som inte syntes men ändå kändes.</p><p><strong>Ett barn med tusen frågor</strong></p><p>När jag var liten bar jag på ett hav av frågor.<br>De vällde upp inom mig som vågor jag inte kunde stoppa –<br>om livet, om döden, om varför världen såg ut som den gjorde.<br>Varför solen gick upp. Varför folk grät.<br>Varför jag ibland kände mig så fruktansvärt ensam, även när rummet var fullt.</p><p>Jag ställde dem till pappa. Till mamma. Till alla jag litade på.<br>För hemma – där fanns tryggheten. Där fick tankarna plats.<br>Där fanns inga skratt bakom ryggen, inga blickar som dömde.<br>Där fanns deras händer. Deras röster.<br>Deras blickar som sa: "Du får undra, älskling."</p><p>Men i skolan var det annorlunda.<br>Där satt frågorna fast som isklumpar i halsen.</p><p>Jag vågade inte räcka upp handen. Vågade inte låta någon höra hur mycket jag undrade,<br>för tänk om de skrattade.<br>Tänk om de tyckte jag var konstig.</p><p>Så jag bar frågorna hem.<br>Sprang med dem till mamma och pappa, som alltid lyssnade.<br>Alltid svarade.<br>Och när jag inte förstod, försökte de igen.<br>Och när svaret inte fanns, höll de bara om mig.</p><p>I deras famn fick mina frågor finnas.<br>I deras kärlek blev det okej att inte veta.<br>Jag vet att jag inte hade klarat barndomen utan dem.<br>De var min första trygghet. Min första tröst.<br>Min första spegel – där jag såg att jag var älskad.</p><p>Men ju äldre jag blev, desto fler skuggor föll in över barndomens ljus. När mina föräldrar skilde sig under gymnasiet var det tungt att bära.<br>En tid som gjorde ont.<br>Men jag är innerligt tacksam att ni idag har en god relation –<br>att ni, trots allt, har kunnat vara där för mig tillsammans.</p><p>Det betyder mer än ni någonsin kan ana.</p><p><strong>När porten till det osynliga öppnades</strong></p><p>Vissa händelser blev vändpunkter i det inre landskap där min oro fick kropp och form. Ett barndomsminne står särskilt klart. Vi hade haft inbrott hemma, och jag – som då gick på fritids – skulle få vara ensam hemma för första gången. Det som borde ha varit ett steg mot självständighet blev istället början på en inre förskjutning. Något förändrades.</p><p>Nätterna blev orons hemvist. Jag började lyssna – efter fotsteg, rörelser, viskningar. Ofta stod jag vid fönstret och stirrade ut i mörkret, övertygad om att någon fanns där ute. Någon som såg oss. Röster viskade i utkanten av mitt medvetande – svaga men oroande, som om de bar på hemligheter jag inte förstod. Jag kunde inte sätta ord på vad som hände inom mig, men något öppnades – och det som sipprade in var kallt och skrämmande.</p><p>Ett annat minne har bränts fast i mitt inre som en skamfläck. Jag hade ordnat en fest, bjudit in vänner, pyntat, försökt skapa något fint. Men när kvällen kom, när gästerna var där och allt borde ha varit glatt – då brast det. Jag klarade inte av det. Jag flydde in i mitt rum, klättrade ut genom fönstret och lade mig i trädgården, låtsades vara medvetslös –</p><p>som om jag druckit för mycket. I själva verket var jag spiknykter. Paniken hade tagit över, och rösterna var där även den kvällen – lågmälda, pressande, som förstärkare av allt jag redan bar inom mig. Jag ville bara försvinna. Bort. Bli osynlig.</p><p>Det var som om något i mig alltid stod på glänt för det osynliga. En slags andlig porositet – en öppenhet som ibland kändes som en gåva, men oftare som en förbannelse. Jag bar på ett överflöd av känslor jag inte hade språk för – och i tystnaden växte rädslan, skulden och skammen. De blev mitt modersmål. Mitt sällskap i mörkret.</p><p>Det här var början. Inte på slutet – men på något som skulle förändra allt.</p>
                     </div>
                 </details>
-
-                <!-- Fler kapitel här... -->
-                <details>
-                    <summary class="text-xl text-gray-700">Visa/dölj: Kapitel 2 - Han som bar ljuset i mörkret</summary>
-                    <div class="details-content space-y-4 text-gray-600 leading-relaxed">
-                        <!-- Innehåll för kapitel 2 -->
-                        <p>Det var något med honom. Redan första dagen jag såg honom på avdelningen visste jag att han inte var som de andra...</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary class="text-xl text-gray-700">Visa/dölj: Kapitel 3 - Han som åt med dem vi förvisat</summary>
-                    <div class="details-content space-y-4 text-gray-600 leading-relaxed">
-                        <!-- Innehåll för kapitel 3 -->
-                        <p>Vi säger att vi bryr oss. Vi säger att alla är lika mycket värda. Men vi går förbi...</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary class="text-xl text-gray-700">Visa/dölj: Kapitel 4 - Blixten från den klarblå himlen</summary>
-                    <div class="details-content space-y-4 text-gray-600 leading-relaxed">
-                        <!-- Innehåll för kapitel 4 -->
-                        <p>En psykos frågar inte efter ditt namn. Den bryr sig inte om hur älskad du är...</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary class="text-xl text-gray-700">Visa/dölj: Kapitel 5 - Rummet som brinner</summary>
-                    <div class="details-content space-y-4 text-gray-600 leading-relaxed">
-                        <!-- Innehåll för kapitel 5 -->
-                        <p>Tänk dig att du står i ett rum som brinner. Inte med lågor av eld – utan något värre...</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary class="text-xl text-gray-700">Visa/dölj: Kapitel 6 - När det är för sent</summary>
-                    <div class="details-content space-y-4 text-gray-600 leading-relaxed">
-                        <!-- Innehåll för kapitel 6 -->
-                        <p>Det finns människor som ropar på hjälp – men ropet försvinner...</p>
-                    </div>
-                </details>
-
-                <details>
-                    <summary class="text-xl text-gray-700">Visa/dölj: Kapitel 7 - Från förlorad till funnen</summary>
-                    <div class="details-content space-y-4 text-gray-600 leading-relaxed">
-                        <!-- Innehåll för kapitel 7 -->
-                        <p>Det var en gång ett får som gick vilse. Det försvann från flocken...</p>
-                    </div>
-                </details>
+                
+                <!-- Klistra in resten av kapitlen på samma sätt -->
 
             </div>
         </section>
 
         <!-- Om författaren -->
-        <section class="my-12 p-8 bg-white rounded-xl shadow-lg flex flex-col md:flex-row items-center gap-8">
-            <img src="images/IMG_2659.jpeg" alt="Måns Holmqvist" class="w-48 h-48 rounded-full object-cover"> <!-- Byt till din lokala bild -->
-            <div>
-                <h2 class="text-3xl font-bold text-orange-600">Om Måns Holmqvist</h2>
-                <p class="mt-4 text-lg leading-relaxed">Måns delar med sig av sin resa genom psykisk ohälsa, en berättelse om att falla och resa sig, om att hitta tro och hopp när allt är som mörkast. Hans ord är ett vittnesbörd om att det finns ett ljus starkare än smärtan och en väg tillbaka till livet.</p>
+        <section class="my-12 p-8 bg-gray-800 rounded-xl shadow-lg flex flex-col md:flex-row items-center gap-8 border-2 border-orange-500">
+            <div class="text-center flex-shrink-0">
+                <img src="https://i.imgur.com/MYDlFnT.jpeg" alt="En ekorre" class="w-48 h-48 rounded-full object-cover mx-auto border-4 border-orange-500">
+                <p class="mt-4 italic text-orange-400">Från Måns Holmqvist, din lokala ekorre</p>
+            </div>
+            <div class="md:text-left text-center">
+                <h2 class="text-3xl font-bold text-orange-500">Om Måns Holmqvist</h2>
+                <p class="mt-4 text-lg leading-relaxed text-gray-300">Måns delar med sig av sin resa genom psykisk ohälsa, en berättelse om att falla och resa sig, om att hitta tro och hopp när allt är som mörkast. Hans ord är ett vittnesbörd om att det finns ett ljus starkare än smärtan och en väg tillbaka till livet.</p>
             </div>
         </section>
 
         <!-- Kontakt -->
-        <section class="my-12 p-8 bg-gray-800 text-white rounded-xl shadow-lg">
-            <h2 class="text-3xl font-bold text-center mb-6">Kontakt</h2>
-            <p class="text-center mb-6">Vid frågor, fyll i formuläret nedan så hör jag av mig.</p>
+        <section class="my-12 p-8 bg-gray-800 rounded-xl shadow-lg border-2 border-orange-500">
+            <h2 class="text-3xl font-bold text-center mb-6 text-orange-500">Kontakt</h2>
+            <p class="text-center mb-6 text-gray-400">Vid frågor, fyll i formuläret nedan så hör jag av mig.</p>
             <form action="https://formspree.io/f/xeogepzd" method="POST" class="max-w-lg mx-auto">
-                <input type="hidden" name="_to" value="mans.lakalle2@gmail.com">
                 <div class="mb-4">
-                    <label for="name" class="block mb-2">Namn:</label>
-                    <input type="text" id="name" name="name" class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-orange-500 outline-none" required>
+                    <label for="name" class="block mb-2 text-gray-400">Namn:</label>
+                    <input type="text" id="name" name="name" class="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:border-orange-500 outline-none" required>
                 </div>
                 <div class="mb-4">
-                    <label for="email" class="block mb-2">E-post:</label>
-                    <input type="email" id="email" name="email" class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-orange-500 outline-none" required>
+                    <label for="email" class="block mb-2 text-gray-400">E-post:</label>
+                    <input type="email" id="email" name="email" class="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:border-orange-500 outline-none" required>
                 </div>
                 <div class="mb-4">
-                    <label for="message" class="block mb-2">Meddelande:</label>
-                    <textarea id="message" name="message" class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-orange-500 outline-none" rows="4" required></textarea>
+                    <label for="message" class="block mb-2 text-gray-400">Meddelande:</label>
+                    <textarea id="message" name="message" class="w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:border-orange-500 outline-none" rows="4" required></textarea>
                 </div>
-                <button type="submit" class="w-full bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600 transition">Skicka</button>
+                <button type="submit" class="w-full bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition">Skicka</button>
             </form>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="text-center p-6 bg-gray-800 text-gray-400">
+    <footer class="text-center p-6 bg-gray-900 text-gray-500">
         <p>&copy; 2024 Måns Holmqvist. Alla rättigheter förbehållna.</p>
         <p>mellanhimmelochhallucination.se</p>
     </footer>
 
-    <!-- JavaScript för Stripe -->
+    <!-- JavaScript för Stripe - med dina nycklar inklistrade! -->
     <script type="text/javascript">
-      // Byt ut mot din PUBLISHABLE key från Stripe
-      const stripe = Stripe('pk_test_DIN_PUBLISHABLE_NYCKEL');
+      // Din publika Stripe-nyckel
+      const stripe = Stripe('pk_live_51Rvza8LBsc8UDu52VYokAej0gUPBH5NT1WpNRqm1PRzcfmOUcopRfmlDIsv7ZzzAJTdyW1CjpKr61e8YJ7oIzjK500LkthtmwF');
       
       const handleCheckout = async () => {
         try {
-          // Byt ut mot din CLOUD FUNCTION TRIGGER URL
-          const functionUrl = 'https://DIN_TRIGGER_URL/createCheckoutSession';
+          // Din Cloud Function URL
+          const functionUrl = 'https://us-central1-himmel-469011.cloudfunctions.net/createCheckoutSession';
 
           const response = await fetch(functionUrl, { method: 'POST' });
           const session = await response.json();
@@ -336,6 +187,7 @@
           });
 
           if (result.error) {
+            // Använd en snyggare modal/dialogruta istället för alert() i en framtida version
             alert(result.error.message);
           }
         } catch (error) {
